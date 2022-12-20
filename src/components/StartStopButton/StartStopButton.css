@@ -1,0 +1,21 @@
+.start-stop-button--button {
+  background-color: rgba(179, 168, 168, 0.737);
+  border: 2px solid black;
+  color: black;
+  border-radius: 9px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.start-stop-button--button:hover {
+  transform: scale(1.05);
+}
+
+.start-stop-button--button:active {
+  /* color: rgba(76, 76, 209, 0.541); */
+  background-color: rgba(76, 76, 209, 0.541);
+}

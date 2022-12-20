@@ -1,0 +1,13 @@
+.title {
+  font-weight: 500;
+  font-size: 28px;
+}
+
+.card-list {
+  display: flex;
+  justify-content: center;
+}
+
+.category-card-list {
+  margin-bottom: 15px;
+}

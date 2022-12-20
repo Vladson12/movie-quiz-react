@@ -1,0 +1,10 @@
+.quiz-results--h1 {
+  display: inline-block;
+  font-size: 36px;
+}
+
+.quiz-results--p {
+  font-size: 24px;
+  text-decoration: none;
+  margin-left: 10px;
+}
