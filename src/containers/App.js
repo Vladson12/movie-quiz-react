@@ -214,10 +214,10 @@ class App extends Component {
   fetchData = async (size) => {
     let items = [];
     const fetchMovies = await fetch(
-      `http://localhost:3000/api/v1/movies/random?quantity=${size}&language=${this.state.language}`
+      `https://movie-quiz-ay6r.onrender.com/movie/random?quantity=${size}&language=${this.state.language}`
     );
     const data = await fetchMovies.json();
-    data.data.movies.forEach((movie) => {
+    data.forEach((movie) => {
       const index = getRandomInt(0, movie.images.length - 1);
       items.push({
         title: movie.title,
