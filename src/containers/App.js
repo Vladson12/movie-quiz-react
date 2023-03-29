@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import "./App.css";
 import Logo from "../components/Logo/Logo";
@@ -22,212 +22,23 @@ import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 import Navigation from "../components/Navigation/Navigation";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      size: 20,
-      quizPhase: Phase.BEFORE_START,
-      language: "en",
-      currentItemIndex: 0,
-      quizItems: [],
-      correctAnswers: 0,
-      timeForOneItem: 15,
-      category: "",
-      time: 0,
-    };
-  }
-
-  // RENDER
-  //----------------------------------------------------------------------
-  render() {
-    const quizItems = this.state.quizItems;
-    const currentItemIndex = this.state.currentItemIndex;
-
-    const logo = [Phase.BEFORE_START, Phase.PREPARING].includes(
-      this.state.quizPhase
-    ) ? (
-      <div className="center">
-        <Logo />
-      </div>
-    ) : (
-      ""
-    );
-
-    const quizCta = [Phase.BEFORE_START, Phase.PREPARING].includes(
-      this.state.quizPhase
-    ) ? (
-      <div className="center">
-        <h1>{"Hey, you're good at movies, aren't you? Take the quiz!"}</h1>
-      </div>
-    ) : (
-      ""
-    );
-
-    const quizResults =
-      this.state.quizPhase === Phase.FINISHED ? (
-        <QuizResults
-          correct={this.state.correctAnswers}
-          total={quizItems.length}
-        />
-      ) : (
-        ""
-      );
-
-    const quizOptions = [Phase.BEFORE_START, Phase.PREPARING].includes(
-      this.state.quizPhase
-    ) ? (
-      <QuizOptions
-        lang={this.state.language}
-        size={this.state.size}
-        onLangChange={this.onLangSelectorChange}
-        onSizeChange={this.onSizeSelectorChange}
-      />
-    ) : (
-      ""
-    );
-
-    const categoryCardList = [Phase.BEFORE_START, Phase.PREPARING].includes(
-      this.state.quizPhase
-    ) ? (
-      <CategoryCardList
-        title={"Choose category"}
-        category={this.state.category}
-        cards={[
-          { name: "Frame", image: "/frames/godfather.jpg" },
-          { name: "Description", image: "/frames/dark-knight.jpg" },
-        ]}
-        onClick={this.onCategoryClick}
-      />
-    ) : (
-      ""
-    );
-
-    let content;
-    switch (this.state.quizPhase) {
-      case Phase.BEFORE_START:
-        content = "LET'S GO!";
-        break;
-      case Phase.RUNNING:
-        content = "FINISH";
-        break;
-      case Phase.FINISHED:
-        content = "TRY AGAIN";
-        break;
-      default:
-        content = "LET'S GO!";
-    }
-    const startStopButton = (
-      <StartStopButton
-        content={content}
-        onClick={this.onStartStopButtonClick}
-      />
-    );
-
-    const timer =
-      this.state.quizPhase === Phase.RUNNING ? (
-        <Timer time={this.state.quizTime} onExpired={this.onTimerExpired} />
-      ) : (
-        ""
-      );
-
-    const horizLine = [Phase.RUNNING, Phase.FINISHED].includes(
-      this.state.quizPhase
-    ) ? (
-      <hr />
-    ) : (
-      ""
-    );
-
-    const quizItemPanel = [Phase.RUNNING, Phase.FINISHED].includes(
-      this.state.quizPhase
-    ) ? (
-      <QuizItemPanel
-        paintWrong={this.state.quizPhase === Phase.FINISHED ? true : false}
-        active={currentItemIndex + 1}
-        onClick={this.onQuizItemPanelButtonClick}
-        items={quizItems}
-      />
-    ) : (
-      " "
-    );
-
-    const answerForm =
-      this.state.quizPhase === Phase.RUNNING &&
-      !quizItems[currentItemIndex].isAnswered ? (
-        <AnswerForm
-          answer={quizItems[currentItemIndex].answer}
-          language={this.state.language}
-          onClick={this.onAnswerButtonClick}
-          onChange={this.onAnswerInputChange}
-        />
-      ) : (
-        ""
-      );
-
-    const answerInfo =
-      (this.state.quizPhase === Phase.RUNNING &&
-        quizItems[currentItemIndex].isAnswered) ||
-      this.state.quizPhase === Phase.FINISHED ? (
-        <AnswerInfo
-          answer={quizItems[currentItemIndex].title}
-          releaseDate={quizItems[currentItemIndex].releaseDate}
-        />
-      ) : (
-        ""
-      );
-
-    const quizItem = [Phase.RUNNING, Phase.FINISHED].includes(
-      this.state.quizPhase
-    ) ? (
-      <QuizItem
-        category={this.state.category}
-        item={quizItems[currentItemIndex]}
-      />
-    ) : (
-      ""
-    );
-
-    const quizLoadingWindow =
-      this.state.quizPhase === Phase.PREPARING ? <Loading /> : "";
-
-    return (
-      <div className="App">
-        <Navigation />
-        <Switch>
-          <Route exact path="/">
-            {quizLoadingWindow}
-            {logo}
-            {quizCta}
-            {quizResults}
-            {quizOptions}
-            {categoryCardList}
-            <div className="center">
-              {startStopButton}
-              {timer}
-            </div>
-            {horizLine}
-            {quizItemPanel}
-            <div className="center">
-              {answerForm}
-              {answerInfo}
-            </div>
-            {quizItem}
-          </Route>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Register} />
-          <Route exact path="/about" component={About} />
-        </Switch>
-      </div>
-    );
-  }
+const App = () => {
+  const [size, setSize] = useState(20);
+  const [quizPhase, setQuizPhase] = useState(Phase.BEFORE_START);
+  const [language, setLanguage] = useState("en");
+  const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const [quizItems, setQuizItems] = useState([]);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [timeForOneItem, setTimeForOneItem] = useState(15);
+  const [quizTime, setQuizTime] = useState(0);
+  const [category, setCategory] = useState("");
 
   // FETCH
   //----------------------------------------------------------------------
-  fetchData = async (size) => {
+  const fetchData = async (size) => {
     let items = [];
     const fetchMovies = await fetch(
-      `https://movie-quiz-ay6r.onrender.com/movie/random?quantity=${size}&language=${this.state.language}`
+      `https://movie-quiz-ay6r.onrender.com/movie/random?quantity=${size}&language=${language}`
     );
     const data = await fetchMovies.json();
     data.forEach((movie) => {
@@ -247,83 +58,236 @@ class App extends Component {
 
   // HANDLERS
   //----------------------------------------------------------------------
-  onCategoryClick = (event) => {
-    this.setState({ category: event.target.id });
+  const onCategoryClick = (event) => {
+    setCategory(event.target.id);
   };
 
-  onStartStopButtonClick = async (event) => {
-    switch (this.state.quizPhase) {
+  const onStartStopButtonClick = async (event) => {
+    switch (quizPhase) {
       case Phase.BEFORE_START:
-        this.fetchData(this.state.size).then((items) => {
-          this.setState((state, props) => ({
-            quizPhase: Phase.RUNNING,
-            currentItemIndex: 0,
-            quizItems: items,
-            correctAnswers: 0,
-            quizTime: this.state.size * this.state.timeForOneItem,
-          }));
+        fetchData(size).then((items) => {
+          setQuizPhase(Phase.RUNNING);
+          setCurrentItemIndex(0);
+          setQuizItems(items);
+          setCorrectAnswers(0);
+          setQuizTime(size * timeForOneItem);
         });
-        return this.setState({ quizPhase: Phase.PREPARING });
+        setQuizPhase(Phase.PREPARING);
+        break;
       case Phase.PREPARING:
         return;
       case Phase.RUNNING:
-        return this.setState({
-          quizPhase: Phase.FINISHED,
-          currentItemIndex: 0,
-        });
+        setQuizPhase(Phase.FINISHED);
+        setCurrentItemIndex(0);
+        break;
       case Phase.FINISHED:
-        return this.setState({ quizPhase: Phase.BEFORE_START });
+        setQuizPhase(Phase.BEFORE_START);
+        break;
       default:
-        return;
+        break;
     }
   };
 
-  onAnswerButtonClick = (event) => {
+  const onAnswerButtonClick = (event) => {
     event.preventDefault();
     const currentAnswer = event.target.querySelector("#input").value;
-    const items = [...this.state.quizItems];
-    let correctAnswers = this.state.correctAnswers;
-    let itemIndex = this.state.currentItemIndex;
+    const items = [...quizItems];
+    let tempCorrectAnswers = correctAnswers;
+    let itemIndex = currentItemIndex;
     items[itemIndex].answer = currentAnswer;
     if (isAnswerCorrect(items[itemIndex].title, items[itemIndex].answer)) {
-      correctAnswers++;
+      tempCorrectAnswers++;
       items[itemIndex].isAnswered = true;
       if (itemIndex < items.length - 1) itemIndex++;
     }
 
     event.target.querySelector("#input").value = "";
-    this.setState({
-      correctAnswers: correctAnswers++,
-      quizItems: items,
-      currentItemIndex: itemIndex,
-    });
+    setCurrentItemIndex(itemIndex);
+    setQuizItems(items);
+    setCorrectAnswers(tempCorrectAnswers++);
   };
 
-  onLangSelectorChange = (event) => {
-    this.setState({ language: event.target.value });
+  const onLangSelectorChange = (event) => {
+    setLanguage(event.target.value);
   };
 
-  onSizeSelectorChange = (event) => {
-    this.setState({ size: Number.parseInt(event.target.value) });
+  const onSizeSelectorChange = (event) => {
+    setSize(Number.parseInt(event.target.value));
   };
 
-  onQuizItemPanelButtonClick = (event) => {
+  const onQuizItemPanelButtonClick = (event) => {
     const itemIndex = Number.parseInt(event.target.textContent) - 1;
-    if (this.state.currentItemIndex !== itemIndex) {
-      this.setState({ currentItemIndex: itemIndex });
+    if (currentItemIndex !== itemIndex) {
+      setCurrentItemIndex(itemIndex);
     }
   };
 
-  onAnswerInputChange = (event) => {
-    const items = [...this.state.quizItems];
-    const itemIndex = this.state.currentItemIndex;
+  const onAnswerInputChange = (event) => {
+    const items = [...quizItems];
+    const itemIndex = currentItemIndex;
     items[itemIndex].answer = event.target.value;
-    this.setState({ quizItems: items });
+    setQuizItems(items);
   };
 
-  onTimerExpired = (intervalID) => {
-    this.setState({ quizPhase: Phase.FINISHED, currentItemIndex: 0 });
+  const onTimerExpired = (intervalID) => {
+    setQuizPhase(Phase.FINISHED);
+    setCurrentItemIndex(0);
   };
-}
+
+  const logo = [Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) ? (
+    <div className="center">
+      <Logo />
+    </div>
+  ) : (
+    ""
+  );
+
+  const quizCta = [Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) ? (
+    <div className="center">
+      <h1>{"Hey, you're good at movies, aren't you? Take the quiz!"}</h1>
+    </div>
+  ) : (
+    ""
+  );
+
+  const quizResults =
+    quizPhase === Phase.FINISHED ? (
+      <QuizResults correct={correctAnswers} total={quizItems.length} />
+    ) : (
+      ""
+    );
+
+  const quizOptions = [Phase.BEFORE_START, Phase.PREPARING].includes(
+    quizPhase
+  ) ? (
+    <QuizOptions
+      lang={language}
+      size={size}
+      onLangChange={onLangSelectorChange}
+      onSizeChange={onSizeSelectorChange}
+    />
+  ) : (
+    ""
+  );
+
+  const categoryCardList = [Phase.BEFORE_START, Phase.PREPARING].includes(
+    quizPhase
+  ) ? (
+    <CategoryCardList
+      title={"Choose category"}
+      category={category}
+      cards={[
+        { name: "Frame", image: "/frames/godfather.jpg" },
+        { name: "Description", image: "/frames/dark-knight.jpg" },
+      ]}
+      onClick={onCategoryClick}
+    />
+  ) : (
+    ""
+  );
+
+  let content;
+  switch (quizPhase) {
+    case Phase.BEFORE_START:
+      content = "LET'S GO!";
+      break;
+    case Phase.RUNNING:
+      content = "FINISH";
+      break;
+    case Phase.FINISHED:
+      content = "TRY AGAIN";
+      break;
+    default:
+      content = "LET'S GO!";
+  }
+  const startStopButton = (
+    <StartStopButton content={content} onClick={onStartStopButtonClick} />
+  );
+
+  const timer =
+    quizPhase === Phase.RUNNING ? (
+      <Timer time={quizTime} onExpired={onTimerExpired} />
+    ) : (
+      ""
+    );
+
+  const horizLine = [Phase.RUNNING, Phase.FINISHED].includes(quizPhase) ? (
+    <hr />
+  ) : (
+    ""
+  );
+
+  const quizItemPanel = [Phase.RUNNING, Phase.FINISHED].includes(quizPhase) ? (
+    <QuizItemPanel
+      paintWrong={quizPhase === Phase.FINISHED ? true : false}
+      active={currentItemIndex + 1}
+      onClick={onQuizItemPanelButtonClick}
+      items={quizItems}
+    />
+  ) : (
+    " "
+  );
+
+  const answerForm =
+    quizPhase === Phase.RUNNING && !quizItems[currentItemIndex].isAnswered ? (
+      <AnswerForm
+        answer={quizItems[currentItemIndex].answer}
+        language={language}
+        onClick={onAnswerButtonClick}
+        onChange={onAnswerInputChange}
+      />
+    ) : (
+      ""
+    );
+
+  const answerInfo =
+    (quizPhase === Phase.RUNNING && quizItems[currentItemIndex].isAnswered) ||
+    quizPhase === Phase.FINISHED ? (
+      <AnswerInfo
+        answer={quizItems[currentItemIndex].title}
+        releaseDate={quizItems[currentItemIndex].releaseDate}
+      />
+    ) : (
+      ""
+    );
+
+  const quizItem = [Phase.RUNNING, Phase.FINISHED].includes(quizPhase) ? (
+    <QuizItem category={category} item={quizItems[currentItemIndex]} />
+  ) : (
+    ""
+  );
+
+  const quizLoadingWindow = quizPhase === Phase.PREPARING ? <Loading /> : "";
+
+  return (
+    <div className="App">
+      <Navigation />
+      <Switch>
+        <Route exact path="/">
+          {quizLoadingWindow}
+          {logo}
+          {quizCta}
+          {quizResults}
+          {quizOptions}
+          {categoryCardList}
+          <div className="center">
+            {startStopButton}
+            {timer}
+          </div>
+          {horizLine}
+          {quizItemPanel}
+          <div className="center">
+            {answerForm}
+            {answerInfo}
+          </div>
+          {quizItem}
+        </Route>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Register} />
+        <Route exact path="/about" component={About} />
+      </Switch>
+    </div>
+  );
+};
 
 export default App;
