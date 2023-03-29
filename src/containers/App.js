@@ -16,6 +16,11 @@ import Timer from "./Timer/Timer";
 import QuizOptions from "../components/QuizOptions/QuizOptions";
 import Loading from "./Loading/Loading";
 import CategoryCardList from "../components/CardList/CategoryCardList";
+import { Route, Switch } from "react-router-dom";
+import About from "../components/About/About";
+import Login from "../components/Login/Login";
+import Signup from "../components/Signup/Signup";
+import Navigation from "../components/Navigation/Navigation";
 
 class App extends Component {
   constructor() {
@@ -188,23 +193,31 @@ class App extends Component {
 
     return (
       <div className="App">
-        {quizLoadingWindow}
-        {logo}
-        {quizCta}
-        {quizResults}
-        {quizOptions}
-        {categoryCardList}
-        <div className="center">
-          {startStopButton}
-          {timer}
-        </div>
-        {horizLine}
-        {quizItemPanel}
-        <div className="center">
-          {answerForm}
-          {answerInfo}
-        </div>
-        {quizItem}
+        <Navigation />
+        <Switch>
+          <Route exact path="/">
+            {quizLoadingWindow}
+            {logo}
+            {quizCta}
+            {quizResults}
+            {quizOptions}
+            {categoryCardList}
+            <div className="center">
+              {startStopButton}
+              {timer}
+            </div>
+            {horizLine}
+            {quizItemPanel}
+            <div className="center">
+              {answerForm}
+              {answerInfo}
+            </div>
+            {quizItem}
+          </Route>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/about" component={About} />
+        </Switch>
       </div>
     );
   }

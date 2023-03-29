@@ -1,12 +1,23 @@
 import React from "react";
 
 import "./Navigation.css";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
     <nav>
-      <p className="nav-p">Login</p>
-      <p className="nav-p">Sign Up</p>
+      <Link to="/" className="nav-p">
+        Home
+      </Link>
+      <Link to="/about" className="nav-p">
+        About
+      </Link>
+      <Link to="/login" className="nav-p">
+        Login
+      </Link>
+      <Link to="signup" className="nav-p">
+        Sign Up
+      </Link>
     </nav>
   );
 };
