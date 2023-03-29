@@ -19,6 +19,8 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
+  const { setLoggedIn } = useContext(AuthContext);
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -44,6 +46,7 @@ const Login = () => {
       setUser("");
       setPwd("");
       setSuccess(true);
+      setLoggedIn(true);
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
