@@ -19,7 +19,7 @@ import CategoryCardList from "../components/CardList/CategoryCardList";
 import { Route, Switch } from "react-router-dom";
 import About from "../components/About/About";
 import Login from "../components/Login/Login";
-import Signup from "../components/Signup/Signup";
+import Register from "../components/Register/Register";
 import Navigation from "../components/Navigation/Navigation";
 
 class App extends Component {
@@ -215,7 +215,7 @@ class App extends Component {
             {quizItem}
           </Route>
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/signup" component={Register} />
           <Route exact path="/about" component={About} />
         </Switch>
       </div>

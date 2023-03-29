@@ -13,7 +13,7 @@ const Navigation = () => {
         About
       </Link>
       <Link to="/login" className="nav-p">
-        Login
+        Sign In
       </Link>
       <Link to="signup" className="nav-p">
         Sign Up
