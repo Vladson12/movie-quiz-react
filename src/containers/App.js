@@ -38,7 +38,7 @@ const App = () => {
   const fetchData = async (size) => {
     let items = [];
     const fetchMovies = await fetch(
-      `https://movie-quiz-ay6r.onrender.com/movie/random?quantity=${size}&language=${language}`
+      `${process.env.REACT_APP_BE_BASE_URL}${process.env.REACT_APP_MOVIES_ENDPOINT}?quantity=${size}&language=${language}`
     );
     const data = await fetchMovies.json();
     data.forEach((movie) => {

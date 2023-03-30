@@ -11,7 +11,6 @@ import "./Register.css";
 
 const USER_REGEX = /^[A-z][A-z0-9-_@.]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/auth/signup";
 
 const Register = () => {
   const userRef = useRef();
@@ -60,7 +59,7 @@ const Register = () => {
     }
     try {
       await axios.post(
-        REGISTER_URL,
+        process.env.REACT_APP_REGISTER_ENDPOINT,
         JSON.stringify({ login: user, password: pwd }),
         {
           headers: { "Content-Type": "application/json" },

@@ -3,14 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import axios from "../../api/axios";
-import { useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
 import "./Login.css";
-
-const LOGIN_URL = "/auth/login";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth, setLoggedIn } = useAuth();
   const userRef = useRef();
   const errRef = useRef();
 
@@ -18,8 +15,6 @@ const Login = () => {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-
-  const { setLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     userRef.current.focus();
@@ -34,15 +29,17 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        process.env.REACT_APP_LOGIN_ENDPOINT,
         JSON.stringify({ login: user, password: pwd }),
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
-      setAuth({ user, pwd, accessToken, refreshToken });
+      const role = response?.data?.role;
+      setAuth({ user, password: pwd, accessToken, refreshToken, role });
       setUser("");
       setPwd("");
       setSuccess(true);
