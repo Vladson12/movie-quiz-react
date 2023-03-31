@@ -12,9 +12,9 @@ import AnswerInfo from "../components/AnswerInfo/AnswerInfo";
 import QuizResults from "../components/QuizResults/QuizResults";
 
 import { Phase } from "../util/quizPhase";
-import Timer from "./Timer/Timer";
+import Timer from "../components/Timer/Timer";
 import QuizOptions from "../components/QuizOptions/QuizOptions";
-import Loading from "../Loading/Loading";
+import Loading from "../components/Loading/Loading";
 import CategoryCardList from "../components/CardList/CategoryCardList";
 import { Route, Switch } from "react-router-dom";
 import About from "../components/About/About";
