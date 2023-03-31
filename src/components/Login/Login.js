@@ -7,7 +7,7 @@ import "./Login.css";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { setAuth, setLoggedIn } = useAuth();
+  const { setAuth } = useAuth();
   const userRef = useRef();
   const errRef = useRef();
 
@@ -43,7 +43,6 @@ const Login = () => {
       setUser("");
       setPwd("");
       setSuccess(true);
-      setLoggedIn(true);
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");

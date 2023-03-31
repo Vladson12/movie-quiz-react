@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 
 const Navigation = () => {
-  const { loggedIn, setLoggedIn } = useContext(AuthContext);
+  const onLogoutButtonClick = () => {
+    setAuth(null);
+  };
+
+  const { auth, setAuth } = useContext(AuthContext);
   return (
     <nav>
       <Link to="/" className="nav-p">
@@ -14,7 +18,7 @@ const Navigation = () => {
       <Link to="/about" className="nav-p">
         About
       </Link>
-      {!loggedIn ? (
+      {!auth ? (
         <>
           <Link to="/login" className="nav-p">
             Sign In
@@ -24,7 +28,7 @@ const Navigation = () => {
           </Link>
         </>
       ) : (
-        <Link to="/" onClick={() => setLoggedIn(false)} className="nav-p">
+        <Link to="/" onClick={onLogoutButtonClick} className="nav-p">
           Log out
         </Link>
       )}
