@@ -5,6 +5,7 @@ import { useRef } from "react";
 import axios from "../../api/axios";
 import "./Login.css";
 import useAuth from "../../hooks/useAuth";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -15,6 +16,8 @@ const Login = () => {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+
+  const [cookies, setCookie] = useCookies("user");
 
   useEffect(() => {
     userRef.current.focus();
@@ -36,10 +39,17 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      const accessToken = response?.data?.accessToken;
-      const refreshToken = response?.data?.refreshToken;
+      setCookie(
+        "user",
+        {
+          login: user,
+          accessToken: response?.data?.accessToken,
+          refreshToken: response?.data?.refreshToken,
+        },
+        { path: "/" }
+      );
       const role = response?.data?.role;
-      setAuth({ user, password: pwd, accessToken, refreshToken, role });
+      setAuth({ user, role });
       setUser("");
       setPwd("");
       setSuccess(true);

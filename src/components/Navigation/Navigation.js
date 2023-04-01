@@ -3,13 +3,17 @@ import { useContext } from "react";
 import "./Navigation.css";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
+import { useCookies } from "react-cookie";
 
 const Navigation = () => {
+  const { auth, setAuth } = useContext(AuthContext);
+  const [cookies, setCookie, removeCookie] = useCookies("user");
+
   const onLogoutButtonClick = () => {
     setAuth(null);
+    removeCookie("user", { path: "/" });
   };
 
-  const { auth, setAuth } = useContext(AuthContext);
   return (
     <nav>
       <Link to="/" className="nav-p">
