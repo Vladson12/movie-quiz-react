@@ -36,6 +36,8 @@ const App = () => {
   const [timeForOneItem, setTimeForOneItem] = useState(15);
   const [quizTime, setQuizTime] = useState(0);
   const [category, setCategory] = useState("");
+  const [startStopButtonContent, setStartStopButtonContent] =
+    useState("LET'S GO!");
 
   const { setAuth } = useContext(AuthContext);
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -80,6 +82,23 @@ const App = () => {
 
     fun();
   }, []);
+
+  useEffect(() => {
+    switch (quizPhase) {
+      case Phase.BEFORE_START:
+        setStartStopButtonContent("LET'S GO!");
+        break;
+      case Phase.RUNNING:
+        setStartStopButtonContent("FINISH");
+        break;
+      case Phase.FINISHED:
+        setStartStopButtonContent("TRY AGAIN");
+        break;
+      default:
+        setStartStopButtonContent("LET'S GO!");
+        break;
+    }
+  }, [quizPhase]);
 
   // FETCH
   //----------------------------------------------------------------------
@@ -182,153 +201,86 @@ const App = () => {
     setCurrentItemIndex(0);
   };
 
-  const logo = [Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) ? (
-    <div className="center">
-      <Logo />
-    </div>
-  ) : (
-    ""
-  );
-
-  const quizCta = [Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) ? (
-    <div className="center">
-      <h1>{"Hey, you're good at movies, aren't you? Take the quiz!"}</h1>
-    </div>
-  ) : (
-    ""
-  );
-
-  const quizResults =
-    quizPhase === Phase.FINISHED ? (
-      <QuizResults correct={correctAnswers} total={quizItems.length} />
-    ) : (
-      ""
-    );
-
-  const quizOptions = [Phase.BEFORE_START, Phase.PREPARING].includes(
-    quizPhase
-  ) ? (
-    <QuizOptions
-      lang={language}
-      size={size}
-      onLangChange={onLangSelectorChange}
-      onSizeChange={onSizeSelectorChange}
-    />
-  ) : (
-    ""
-  );
-
-  const categoryCardList = [Phase.BEFORE_START, Phase.PREPARING].includes(
-    quizPhase
-  ) ? (
-    <CategoryCardList
-      title={"Choose category"}
-      category={category}
-      cards={[
-        { name: "Frame", image: "/frames/godfather.jpg" },
-        { name: "Description", image: "/frames/dark-knight.jpg" },
-      ]}
-      onClick={onCategoryClick}
-    />
-  ) : (
-    ""
-  );
-
-  let content;
-  switch (quizPhase) {
-    case Phase.BEFORE_START:
-      content = "LET'S GO!";
-      break;
-    case Phase.RUNNING:
-      content = "FINISH";
-      break;
-    case Phase.FINISHED:
-      content = "TRY AGAIN";
-      break;
-    default:
-      content = "LET'S GO!";
-  }
-  const startStopButton = (
-    <StartStopButton content={content} onClick={onStartStopButtonClick} />
-  );
-
-  const timer =
-    quizPhase === Phase.RUNNING ? (
-      <Timer time={quizTime} onExpired={onTimerExpired} />
-    ) : (
-      ""
-    );
-
-  const horizLine = [Phase.RUNNING, Phase.FINISHED].includes(quizPhase) ? (
-    <hr />
-  ) : (
-    ""
-  );
-
-  const quizItemPanel = [Phase.RUNNING, Phase.FINISHED].includes(quizPhase) ? (
-    <QuizItemPanel
-      paintWrong={quizPhase === Phase.FINISHED ? true : false}
-      active={currentItemIndex + 1}
-      onClick={onQuizItemPanelButtonClick}
-      items={quizItems}
-    />
-  ) : (
-    " "
-  );
-
-  const answerForm =
-    quizPhase === Phase.RUNNING && !quizItems[currentItemIndex].isAnswered ? (
-      <AnswerForm
-        answer={quizItems[currentItemIndex].answer}
-        language={language}
-        onClick={onAnswerButtonClick}
-        onChange={onAnswerInputChange}
-      />
-    ) : (
-      ""
-    );
-
-  const answerInfo =
-    (quizPhase === Phase.RUNNING && quizItems[currentItemIndex].isAnswered) ||
-    quizPhase === Phase.FINISHED ? (
-      <AnswerInfo
-        answer={quizItems[currentItemIndex].title}
-        releaseDate={quizItems[currentItemIndex].releaseDate}
-      />
-    ) : (
-      ""
-    );
-
-  const quizItem = [Phase.RUNNING, Phase.FINISHED].includes(quizPhase) ? (
-    <QuizItem category={category} item={quizItems[currentItemIndex]} />
-  ) : (
-    ""
-  );
-
-  const quizLoadingWindow = quizPhase === Phase.PREPARING ? <Loading /> : "";
-
   return (
     <div className="App">
       <Navigation />
       <Switch>
         <Route exact path="/">
-          {quizLoadingWindow}
-          {logo}
-          {quizCta}
-          {quizResults}
-          {quizOptions}
-          {categoryCardList}
+          {quizPhase === Phase.PREPARING && <Loading />}
+          {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
+            <div className="center">
+              <Logo />
+            </div>
+          )}
+          {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
+            <div className="center">
+              <h1>
+                {"Hey, you're good at movies, aren't you? Take the quiz!"}
+              </h1>
+            </div>
+          )}
+          {quizPhase === Phase.FINISHED && (
+            <QuizResults correct={correctAnswers} total={quizItems.length} />
+          )}
+          {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
+            <QuizOptions
+              lang={language}
+              size={size}
+              onLangChange={onLangSelectorChange}
+              onSizeChange={onSizeSelectorChange}
+            />
+          )}
+          {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
+            <CategoryCardList
+              title={"Choose category"}
+              category={category}
+              cards={[
+                { name: "Frame", image: "/frames/godfather.jpg" },
+                { name: "Description", image: "/frames/dark-knight.jpg" },
+              ]}
+              onClick={onCategoryClick}
+            />
+          )}
           <div className="center">
-            {startStopButton}
-            {timer}
+            <StartStopButton
+              content={startStopButtonContent}
+              onClick={onStartStopButtonClick}
+            />
+            {quizPhase === Phase.RUNNING && (
+              <Timer time={quizTime} onExpired={onTimerExpired} />
+            )}
           </div>
-          {horizLine}
-          {quizItemPanel}
+          {[Phase.RUNNING, Phase.FINISHED].includes(quizPhase) && <hr />}
+          {[Phase.RUNNING, Phase.FINISHED].includes(quizPhase) && (
+            <QuizItemPanel
+              paintWrong={quizPhase === Phase.FINISHED}
+              active={currentItemIndex + 1}
+              onClick={onQuizItemPanelButtonClick}
+              items={quizItems}
+            />
+          )}
           <div className="center">
-            {answerForm}
-            {answerInfo}
+            {quizPhase === Phase.RUNNING &&
+              !quizItems[currentItemIndex].isAnswered && (
+                <AnswerForm
+                  answer={quizItems[currentItemIndex].answer}
+                  language={language}
+                  onClick={onAnswerButtonClick}
+                  onChange={onAnswerInputChange}
+                />
+              )}
+            {(quizPhase === Phase.RUNNING &&
+              quizItems[currentItemIndex].isAnswered) ||
+              (quizPhase === Phase.FINISHED && (
+                <AnswerInfo
+                  answer={quizItems[currentItemIndex].title}
+                  releaseDate={quizItems[currentItemIndex].releaseDate}
+                />
+              ))}
           </div>
-          {quizItem}
+          {[Phase.RUNNING, Phase.FINISHED].includes(quizPhase) && (
+            <QuizItem category={category} item={quizItems[currentItemIndex]} />
+          )}
         </Route>
         <Route exact path="/login" render={() => <Login />} />
         <Route exact path="/signup" component={Register} />
