@@ -1,25 +1,38 @@
+import { useCookies } from "react-cookie";
 import { axiosPrivate } from "../api/axios";
 import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
-  const { auth, setAuth } = useAuth();
+  const { setAuth } = useAuth();
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   const refresh = async () => {
-    const response = await axiosPrivate.post(
-      process.env.REACT_APP_REFRESH_ENDPOINT,
-      {},
-      {
-        headers: { Authorization: `Bearer ${auth.refreshToken}` },
+    try {
+      const responseRefresh = await axiosPrivate.post(
+        process.env.REACT_APP_REFRESH_ENDPOINT,
+        {},
+        {
+          headers: { Authorization: `Bearer ${cookies.user.refreshToken}` },
+          withCredentials: true,
+        }
+      );
+      setCookie(
+        "user",
+        {
+          ...cookies.user,
+          accessToken: responseRefresh.data.accessToken,
+          refreshToken: responseRefresh.data.refreshToken,
+        },
+        { path: "/" }
+      );
+      return responseRefresh.data.accessToken;
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setAuth(null);
+        removeCookie("user", { path: "/" });
       }
-    );
-    setAuth((prev) => {
-      return {
-        ...prev,
-        accessToken: response.data.accessToken,
-        refreshToken: response.data.refreshToken,
-      };
-    });
-    return response.data.accessToken;
+      return null;
+    }
   };
   return refresh;
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./App.css";
 import Logo from "../components/Logo/Logo";
@@ -7,7 +7,6 @@ import StartStopButton from "../components/StartStopButton/StartStopButton";
 import QuizItemPanel from "../components/QuizItemPanel/QuizItemPanel";
 import QuizItem from "../components/QuizItem/QiuzItem";
 import isAnswerCorrect from "../util/isAnswerCorrect";
-import getRandomInt from "../util/random";
 import AnswerInfo from "../components/AnswerInfo/AnswerInfo";
 import QuizResults from "../components/QuizResults/QuizResults";
 
@@ -23,8 +22,9 @@ import Register from "../components/Register/Register";
 import Navigation from "../components/Navigation/Navigation";
 
 import { useCookies } from "react-cookie";
-import { axiosPrivate } from "../api/axios";
-import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import fetchQuizData from "../util/fetchQuizData";
 
 const App = () => {
   const [size, setSize] = useState(20);
@@ -39,48 +39,34 @@ const App = () => {
   const [startStopButtonContent, setStartStopButtonContent] =
     useState("LET'S GO!");
 
-  const { setAuth } = useContext(AuthContext);
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "login",
-    "accessToken",
-    "refreshToken",
-  ]);
+  const { setAuth } = useAuth();
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    const fun = async () => {
-      if (cookies?.accessToken) {
-        const partsOfAccessToken = cookies.accessToken.split(".");
-        const accessTokenPayload = JSON.parse(atob(partsOfAccessToken[1]));
-        const accessTokenExp = accessTokenPayload.exp * 1000;
-        if (accessTokenExp < Date.now() && cookies?.refreshToken) {
-          const partsOfRefreshToken = cookies.refreshToken.split(".");
-          const refreshTokenPayload = JSON.parse(atob(partsOfRefreshToken[1]));
-          const refreshTokenExp = refreshTokenPayload.exp * 1000;
-          if (refreshTokenExp < Date.now()) {
-            removeCookie("accessToken", { path: "/" });
-            setAuth(null);
-          } else {
-            try {
-              const response = await axiosPrivate.post(
-                process.env.REACT_APP_REFRESH_ENDPOINT,
-                {},
-                { headers: { Authorization: `Bearer ${cookies.refreshToken}` } }
-              );
-              setCookie("accessToken", response.data.accessToken, {
-                path: "/",
-              });
-              setCookie("refreshToken", response.data.refreshToken, {
-                path: "/",
-              });
-            } catch (err) {
-              setAuth(null);
+    const getUserInfo = async () => {
+      if (cookies.user) {
+        try {
+          const responseMe = await axiosPrivate.get(
+            process.env.REACT_APP_GET_CURRENT_USER_ENDPOINT,
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.user.accessToken}`,
+                withCredentials: true,
+              },
             }
+          );
+          setAuth(responseMe.data);
+        } catch (err) {
+          if (err.response && err.response.status === 401) {
+            setAuth(null);
+            removeCookie("user", { path: "/" });
           }
         }
       }
     };
 
-    fun();
+    getUserInfo();
   }, []);
 
   useEffect(() => {
@@ -100,29 +86,6 @@ const App = () => {
     }
   }, [quizPhase]);
 
-  // FETCH
-  //----------------------------------------------------------------------
-  const fetchData = async (size) => {
-    let items = [];
-    const fetchMovies = await fetch(
-      `${process.env.REACT_APP_BE_BASE_URL}${process.env.REACT_APP_MOVIES_ENDPOINT}?quantity=${size}&language=${language}`
-    );
-    const data = await fetchMovies.json();
-    data.forEach((movie) => {
-      const index = getRandomInt(0, movie.images.length - 1);
-      items.push({
-        title: movie.title,
-        description: movie.overview,
-        image: movie.images[index],
-        releaseDate: movie.releaseDate,
-        isAnswered: false,
-        answer: "",
-      });
-    });
-
-    return items;
-  };
-
   // HANDLERS
   //----------------------------------------------------------------------
   const onCategoryClick = (event) => {
@@ -132,7 +95,7 @@ const App = () => {
   const onStartStopButtonClick = async (event) => {
     switch (quizPhase) {
       case Phase.BEFORE_START:
-        fetchData(size).then((items) => {
+        fetchQuizData(size, language).then((items) => {
           setQuizPhase(Phase.RUNNING);
           setCurrentItemIndex(0);
           setQuizItems(items);
@@ -282,7 +245,7 @@ const App = () => {
             <QuizItem category={category} item={quizItems[currentItemIndex]} />
           )}
         </Route>
-        <Route exact path="/login" render={() => <Login />} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Register} />
         <Route exact path="/about" component={About} />
       </Switch>

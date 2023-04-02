@@ -6,18 +6,21 @@ import axios from "../../api/axios";
 import "./Login.css";
 import useAuth from "../../hooks/useAuth";
 import { useCookies } from "react-cookie";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const userRef = useRef();
   const errRef = useRef();
+  const history = useHistory();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
 
-  const [cookies, setCookie] = useCookies("user");
+  const [cookies, setCookie] = useCookies(["user"]);
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     userRef.current.focus();
@@ -31,7 +34,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
+      const responseLogin = await axios.post(
         process.env.REACT_APP_LOGIN_ENDPOINT,
         JSON.stringify({ login: user, password: pwd }),
         {
@@ -42,26 +45,34 @@ const Login = () => {
       setCookie(
         "user",
         {
-          login: user,
-          accessToken: response?.data?.accessToken,
-          refreshToken: response?.data?.refreshToken,
+          accessToken: responseLogin.data.accessToken,
+          refreshToken: responseLogin.data.refreshToken,
         },
         { path: "/" }
       );
-      const role = response?.data?.role;
-      setAuth({ user, role });
+
+      const responseMe = await axiosPrivate.get(
+        process.env.REACT_APP_GET_CURRENT_USER_ENDPOINT,
+        {
+          headers: {
+            Authorization: `Bearer ${responseLogin.data.accessToken}`,
+            withCredentials: true,
+          },
+        }
+      );
+      setAuth(responseMe.data);
       setUser("");
       setPwd("");
-      setSuccess(true);
+      history.push("/");
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg("No server response");
       } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
+        setErrMsg("Incorrect username or password");
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
       } else {
-        setErrMsg("Login Failed");
+        setErrMsg("Login failed");
       }
       errRef.current.focus();
     }
@@ -69,13 +80,9 @@ const Login = () => {
 
   return (
     <div className="Login">
-      {success ? (
+      {auth ? (
         <section>
-          <h1>You are logged in!</h1>
-          <br />
-          <p>
-            <a href="/">Go to Home</a>
-          </p>
+          <h1>{`You are already logged in as ${auth.login}! Please log out first.`}</h1>
         </section>
       ) : (
         <section>
@@ -88,10 +95,10 @@ const Login = () => {
           </p>
           <h1>Sign in to Movie Quiz</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="text">Email:</label>
             <input
               type="text"
-              id="username"
+              id="text"
               ref={userRef}
               autoComplete="off"
               onChange={(e) => setUser(e.target.value)}

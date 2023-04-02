@@ -1,12 +1,10 @@
-import { useContext } from "react";
-
 import "./Navigation.css";
 import { Link } from "react-router-dom";
-import AuthContext from "../../context/AuthProvider";
 import { useCookies } from "react-cookie";
+import useAuth from "../../hooks/useAuth";
 
 const Navigation = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useAuth();
   const [cookies, setCookie, removeCookie] = useCookies("user");
 
   const onLogoutButtonClick = () => {
@@ -32,9 +30,14 @@ const Navigation = () => {
           </Link>
         </>
       ) : (
-        <Link to="/" onClick={onLogoutButtonClick} className="nav-p">
-          Log out
-        </Link>
+        <>
+          <Link to="#" className="nav-p">
+            {auth.login}
+          </Link>
+          <Link to="/" onClick={onLogoutButtonClick} className="nav-p">
+            Log out
+          </Link>
+        </>
       )}
     </nav>
   );

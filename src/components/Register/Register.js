@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
 
 import "./Register.css";
+import useAuth from "../../hooks/useAuth";
 
 const USER_REGEX = /^[A-z][A-z0-9-_@.]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -19,6 +20,7 @@ const Register = () => {
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
+  const { auth } = useAuth();
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
@@ -73,9 +75,9 @@ const Register = () => {
       setMatchPwd("");
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
+        setErrMsg("No server response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Username taken");
       } else {
         setErrMsg("Registration Failed");
       }
@@ -91,6 +93,12 @@ const Register = () => {
           <p>
             <a href="#">Sign In</a>
           </p>
+        </section>
+      ) : auth ? (
+        <section>
+          <h1>
+            You already have an account and logged in! Please log out first.
+          </h1>
         </section>
       ) : (
         <section>
