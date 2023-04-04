@@ -95,22 +95,20 @@ const App = () => {
   const onStartStopButtonClick = async (event) => {
     switch (quizPhase) {
       case Phase.BEFORE_START:
-        fetchQuizData(size, language).then((items) => {
-          setQuizPhase(Phase.RUNNING);
-          setCurrentItemIndex(0);
-          setQuizItems(items);
-          setCorrectAnswers(0);
-          setQuizTime(size * timeForOneItem);
-        });
-        setQuizPhase(Phase.PREPARING);
+        // fetchQuizData(size, language).then((items) => {
+        setQuizPhase(Phase.RUNNING);
+        setCurrentItemIndex(0);
+        setQuizItems([{ isAnswered: false }]);
+        setCorrectAnswers(0);
+        setQuizTime(size * timeForOneItem);
+        // });
+        // setQuizPhase(Phase.PREPARING);
         break;
       case Phase.PREPARING:
         return;
       case Phase.RUNNING:
         setQuizPhase(Phase.FINISHED);
         setCurrentItemIndex(0);
-        break;
-      case Phase.FINISHED:
         if (auth) {
           axiosPrivate.post(
             process.env.REACT_APP_CREATE_GAME_ENDPOINT,
@@ -127,6 +125,8 @@ const App = () => {
             }
           );
         }
+        break;
+      case Phase.FINISHED:
         setQuizPhase(Phase.BEFORE_START);
         break;
       default:
