@@ -39,7 +39,7 @@ const App = () => {
   const [startStopButtonContent, setStartStopButtonContent] =
     useState("LET'S GO!");
 
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const axiosPrivate = useAxiosPrivate();
 
@@ -111,6 +111,22 @@ const App = () => {
         setCurrentItemIndex(0);
         break;
       case Phase.FINISHED:
+        if (auth) {
+          axiosPrivate.post(
+            process.env.REACT_APP_CREATE_GAME_ENDPOINT,
+            {
+              playedAt: new Date(),
+              size,
+              correctAnswers,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.user.accessToken}`,
+                withCredentials: true,
+              },
+            }
+          );
+        }
         setQuizPhase(Phase.BEFORE_START);
         break;
       default:
