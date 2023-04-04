@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./LangSelector.css";
+import "../QuizOptions/QuizOptions.css";
 
 const LangSelector = ({ lang, onChange }) => {
   return (

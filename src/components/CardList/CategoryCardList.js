@@ -6,7 +6,7 @@ import "./CategoryCardList.css";
 const CategoryCardList = ({ category, onClick, title, cards }) => {
   return (
     <div className="category-card-list">
-      <h1 className="title">{title}</h1>
+      <h2 className="title">{title}</h2>
       <div className="card-list">
         {cards.map((card, i) => {
           return (

@@ -1,0 +1,13 @@
+.about {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+}

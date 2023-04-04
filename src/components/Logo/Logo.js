@@ -6,7 +6,7 @@ import logo from "./logo.png";
 
 const Logo = () => {
   return (
-    <div>
+    <div className="logo">
       <Tilt
         className="Tilt"
         options={{ max: 55 }}

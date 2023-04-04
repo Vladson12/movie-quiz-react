@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  min-height: 100vh;
+  padding: 0rem 0.5rem;
 }
 
 .center {
@@ -11,4 +12,8 @@
 button,
 select {
   cursor: pointer;
+}
+
+h1 {
+  font-size: 2.5rem;
 }

@@ -4,7 +4,7 @@ import "./CategoryCard.css";
 
 const CategoryCard = ({ active, onClick, name, image }) => {
   return (
-    <div
+    <button
       id={name.toLowerCase()}
       className={`card ${active ? "active" : ""}`}
       style={{
@@ -12,10 +12,8 @@ const CategoryCard = ({ active, onClick, name, image }) => {
       }}
       onClick={onClick}
     >
-      <div>
-        <h1>{name}</h1>
-      </div>
-    </div>
+      {name}
+    </button>
   );
 };
 

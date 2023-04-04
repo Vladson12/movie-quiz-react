@@ -37,7 +37,7 @@ const App = () => {
   const [quizTime, setQuizTime] = useState(0);
   const [category, setCategory] = useState("");
   const [startStopButtonContent, setStartStopButtonContent] =
-    useState("LET'S GO!");
+    useState("Let's go!");
 
   const { auth, setAuth } = useAuth();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -72,16 +72,16 @@ const App = () => {
   useEffect(() => {
     switch (quizPhase) {
       case Phase.BEFORE_START:
-        setStartStopButtonContent("LET'S GO!");
+        setStartStopButtonContent("Let's go!");
         break;
       case Phase.RUNNING:
-        setStartStopButtonContent("FINISH");
+        setStartStopButtonContent("Finish");
         break;
       case Phase.FINISHED:
-        setStartStopButtonContent("TRY AGAIN");
+        setStartStopButtonContent("Try again");
         break;
       default:
-        setStartStopButtonContent("LET'S GO!");
+        setStartStopButtonContent("Let's go!");
         break;
     }
   }, [quizPhase]);
@@ -186,11 +186,7 @@ const App = () => {
       <Switch>
         <Route exact path="/">
           {quizPhase === Phase.PREPARING && <Loading />}
-          {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
-            <div className="center">
-              <Logo />
-            </div>
-          )}
+
           {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
             <div className="center">
               <h1>
@@ -220,15 +216,13 @@ const App = () => {
               onClick={onCategoryClick}
             />
           )}
-          <div className="center">
-            <StartStopButton
-              content={startStopButtonContent}
-              onClick={onStartStopButtonClick}
-            />
-            {quizPhase === Phase.RUNNING && (
-              <Timer time={quizTime} onExpired={onTimerExpired} />
-            )}
-          </div>
+          <StartStopButton
+            content={startStopButtonContent}
+            onClick={onStartStopButtonClick}
+          />
+          {quizPhase === Phase.RUNNING && (
+            <Timer time={quizTime} onExpired={onTimerExpired} />
+          )}
           {[Phase.RUNNING, Phase.FINISHED].includes(quizPhase) && <hr />}
           {[Phase.RUNNING, Phase.FINISHED].includes(quizPhase) && (
             <QuizItemPanel

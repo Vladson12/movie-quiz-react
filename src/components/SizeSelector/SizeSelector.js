@@ -1,5 +1,7 @@
 import React from "react";
 
+import "../QuizOptions/QuizOptions.css";
+
 const SizeSelector = ({ size, onChange }) => {
   return (
     <div className="center selector">
