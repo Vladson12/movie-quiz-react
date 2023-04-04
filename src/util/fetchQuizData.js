@@ -6,7 +6,7 @@ const fetchQuizData = async (size, language) => {
   try {
     const responseMovies = await axios.get(
       `${process.env.REACT_APP_MOVIES_ENDPOINT}?quantity=${size}&language=${language}`,
-      { withCredentials: true, timeout: 3000 }
+      { withCredentials: true }
     );
     responseMovies.data.forEach((movie) => {
       const index = getRandomInt(0, movie.images.length - 1);
