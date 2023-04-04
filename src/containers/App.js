@@ -98,7 +98,7 @@ const App = () => {
         fetchQuizData(size, language).then((items) => {
           setQuizPhase(Phase.RUNNING);
           setCurrentItemIndex(0);
-          setQuizItems([{ isAnswered: false }]);
+          setQuizItems(items);
           setCorrectAnswers(0);
           setQuizTime(size * timeForOneItem);
         });
