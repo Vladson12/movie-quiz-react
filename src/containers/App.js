@@ -95,14 +95,14 @@ const App = () => {
   const onStartStopButtonClick = async (event) => {
     switch (quizPhase) {
       case Phase.BEFORE_START:
-        // fetchQuizData(size, language).then((items) => {
-        setQuizPhase(Phase.RUNNING);
-        setCurrentItemIndex(0);
-        setQuizItems([{ isAnswered: false }]);
-        setCorrectAnswers(0);
-        setQuizTime(size * timeForOneItem);
-        // });
-        // setQuizPhase(Phase.PREPARING);
+        fetchQuizData(size, language).then((items) => {
+          setQuizPhase(Phase.RUNNING);
+          setCurrentItemIndex(0);
+          setQuizItems([{ isAnswered: false }]);
+          setCorrectAnswers(0);
+          setQuizTime(size * timeForOneItem);
+        });
+        setQuizPhase(Phase.PREPARING);
         break;
       case Phase.PREPARING:
         return;
