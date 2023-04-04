@@ -15,14 +15,8 @@ const SizeSelector = ({ size, onChange }) => {
         <option className="selector-option" value="10">
           {10}
         </option>
-        <option className="selector-option" value="15">
-          {15}
-        </option>
         <option className="selector-option" value="20">
           {20}
-        </option>
-        <option className="selector-option" value="25">
-          {25}
         </option>
         <option className="selector-option" value="30">
           {30}
