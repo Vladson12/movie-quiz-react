@@ -209,7 +209,7 @@ const App = () => {
                 { name: "Frame", image: "/frames/godfather.jpg" },
                 { name: "Description", image: "/frames/dark-knight.jpg" },
               ]}
-              onClick={onCategoryClick}
+              onCategoryClick={onCategoryClick}
             />
           )}
           <StartStopButton
