@@ -94,9 +94,10 @@ const Login = () => {
             {errMsg}
           </p>
           <h1>Sign in to Movie Quiz</h1>
-          <form onSubmit={handleSubmit}>
+          <form className="form-login" onSubmit={handleSubmit}>
             <label htmlFor="text">Email:</label>
             <input
+              className="form-login--input"
               type="text"
               id="text"
               ref={userRef}
@@ -108,13 +109,19 @@ const Login = () => {
 
             <label htmlFor="password">Password:</label>
             <input
+              className="form-login--input"
               type="password"
               id="password"
               onChange={(e) => setPwd(e.target.value)}
               value={pwd}
               required
             />
-            <button disabled={!user || !pwd ? true : false}>Sign In</button>
+            <button
+              className="button-login"
+              disabled={!user || !pwd ? true : false}
+            >
+              Sign In
+            </button>
           </form>
           <p>
             New to Movie Quiz?

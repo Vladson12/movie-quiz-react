@@ -4,9 +4,9 @@ import "../QuizOptions/QuizOptions.css";
 
 const LangSelector = ({ lang, onChange }) => {
   return (
-    <div className="center selector">
+    <div className="selector">
       <label className="selector-label" htmlFor="lang">
-        {"Choose quiz language:"}
+        {"Quiz language:"}
       </label>
       <select
         className="selector-field"

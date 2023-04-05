@@ -1,11 +1,12 @@
 import React from "react";
 
 import QuizItemNumberButton from "./QuizItemNumberButton";
+import "./QuizItemPanel.css";
 
 const QuizItemPanel = ({ paintWrong, items, active, onClick }) => {
-  const rows = [];
+  const itemButtons = [];
   for (let i = 1; i <= items.length; i++) {
-    rows.push(
+    itemButtons.push(
       <QuizItemNumberButton
         wrong={paintWrong}
         key={i}
@@ -16,7 +17,7 @@ const QuizItemPanel = ({ paintWrong, items, active, onClick }) => {
       />
     );
   }
-  return <div className="center">{rows}</div>;
+  return <main className="quiz-item-panel">{itemButtons}</main>;
 };
 
 export default QuizItemPanel;

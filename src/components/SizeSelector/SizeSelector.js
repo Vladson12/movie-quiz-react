@@ -4,9 +4,9 @@ import "../QuizOptions/QuizOptions.css";
 
 const SizeSelector = ({ size, onChange }) => {
   return (
-    <div className="center selector">
+    <div className="selector">
       <label className="selector-label" htmlFor="zise">
-        {"Choose quiz size:"}
+        {"Size:"}
       </label>
       <select
         className="selector-field"

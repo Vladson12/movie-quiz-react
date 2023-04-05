@@ -15,7 +15,7 @@ const message = (rate) => {
 
 const QuizResults = ({ correct, total }) => {
   return (
-    <div className="center">
+    <div className="quiz-results">
       <h1 className="quiz-results--h1">
         {correct}/{total}
       </h1>

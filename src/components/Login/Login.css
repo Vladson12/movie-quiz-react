@@ -18,7 +18,7 @@ section {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-form {
+.form-login {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -31,9 +31,8 @@ a:visited {
   color: #fff;
 }
 
-input[type="text"],
-input[type="password"],
-button,
+.form-login--input,
+.button-login,
 textarea {
   font-family: "Nunito", sans-serif;
   font-size: 22px;
@@ -42,11 +41,11 @@ textarea {
 }
 
 label,
-button {
+.button-login {
   margin-top: 1rem;
 }
 
-button {
+.button-login {
   padding: 0.5rem;
 }
 

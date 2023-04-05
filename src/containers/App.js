@@ -203,10 +203,6 @@ const App = () => {
               size={size}
               onLangChange={onLangSelectorChange}
               onSizeChange={onSizeSelectorChange}
-            />
-          )}
-          {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
-            <CategoryCardList
               title={"Choose category"}
               category={category}
               cards={[

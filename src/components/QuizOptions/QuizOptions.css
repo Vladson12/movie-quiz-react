@@ -1,6 +1,20 @@
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rest-selectors {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .selector {
-  margin: 10px 10px;
-  font-size: 1.6rem;
+  margin: 0px 10px;
+  font-size: 0.8rem;
 }
 
 .selector-label {

@@ -110,7 +110,7 @@ const Register = () => {
             {errMsg}
           </p>
           <h1>Register</h1>
-          <form onSubmit={handleSubmit}>
+          <form className="form-register" onSubmit={handleSubmit}>
             <label htmlFor="username">
               Username:
               <FontAwesomeIcon
@@ -123,6 +123,7 @@ const Register = () => {
               />
             </label>
             <input
+              className="form-register--input"
               type="text"
               id="username"
               ref={userRef}
@@ -161,6 +162,7 @@ const Register = () => {
               />
             </label>
             <input
+              className="form-register--input"
               type="password"
               id="password"
               onChange={(e) => setPwd(e.target.value)}
@@ -201,6 +203,7 @@ const Register = () => {
               />
             </label>
             <input
+              className="form-register--input"
               type="password"
               id="confirm_pwd"
               onChange={(e) => setMatchPwd(e.target.value)}
@@ -222,6 +225,7 @@ const Register = () => {
             </p>
 
             <button
+              className="button-register"
               disabled={!validName || !validPwd || !validMatch ? true : false}
             >
               Sign Up

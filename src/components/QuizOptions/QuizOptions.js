@@ -3,14 +3,34 @@ import LangSelector from "../LangSelector/LangSelector";
 import SizeSelector from "../SizeSelector/SizeSelector";
 
 import "./QuizOptions.css";
+import CategoryCardList from "../CardList/CategoryCardList";
 
-const QuizOptions = ({ lang, size, onLangChange, onSizeChange }) => {
+const QuizOptions = ({
+  lang,
+  size,
+  onLangChange,
+  onSizeChange,
+  title,
+  category,
+  cards,
+  onCategoryClick,
+}) => {
   return (
-    <div className="center">
-      <LangSelector lang={lang} onChange={onLangChange} />
+    <main className="quiz-options">
+      <div className="rest-selectors">
+        <LangSelector lang={lang} onChange={onLangChange} />
 
-      <SizeSelector size={size} onChange={onSizeChange} />
-    </div>
+        <SizeSelector size={size} onChange={onSizeChange} />
+      </div>
+      <div className="category-selector">
+        <CategoryCardList
+          title={title}
+          category={category}
+          cards={cards}
+          onClick={onCategoryClick}
+        />
+      </div>
+    </main>
   );
 };
 

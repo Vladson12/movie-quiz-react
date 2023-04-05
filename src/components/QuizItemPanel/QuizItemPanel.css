@@ -1,1 +1,7 @@
-
+.quiz-item-panel {
+  display: flex;
+  flex-direction: rows;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}

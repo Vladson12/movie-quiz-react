@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./QuizItemPanelButton.css";
+import "./QuizItemNumberButton.css";
 
 const QuizItemNumberButton = ({ wrong, active, number, onClick, item }) => {
   let className = "quiz-item-panel--button";

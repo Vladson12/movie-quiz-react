@@ -4,7 +4,7 @@ import "./AnswerForm.css";
 
 const AnswerForm = ({ answer, language, onClick, onChange }) => {
   return (
-    <form onSubmit={onClick} className="answer-form center">
+    <form onSubmit={onClick} className="answer-form">
       <input
         type="text"
         className="answer-form--input"
