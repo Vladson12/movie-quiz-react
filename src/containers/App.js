@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import "./App.css";
-import Logo from "../components/Logo/Logo";
 import AnswerForm from "../components/AnswerForm/AnswerForm";
 import StartStopButton from "../components/StartStopButton/StartStopButton";
 import QuizItemPanel from "../components/QuizItemPanel/QuizItemPanel";
@@ -14,7 +13,6 @@ import { Phase } from "../util/quizPhase";
 import Timer from "../components/Timer/Timer";
 import QuizOptions from "../components/QuizOptions/QuizOptions";
 import Loading from "../components/Loading/Loading";
-import CategoryCardList from "../components/CardList/CategoryCardList";
 import { Route, Switch } from "react-router-dom";
 import About from "../components/About/About";
 import Login from "../components/Login/Login";
