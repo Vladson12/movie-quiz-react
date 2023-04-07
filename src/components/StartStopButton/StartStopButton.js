@@ -6,7 +6,7 @@ const StartStopButton = ({ content, onClick }) => {
   return (
     <div className="center">
       <button className=" start-stop-button--button" onClick={onClick}>
-        {content}
+        {content.icon} {content.message}
       </button>
     </div>
   );

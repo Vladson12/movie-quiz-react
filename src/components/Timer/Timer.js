@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Timer.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 const Timer = (props) => {
   const [time, setTime] = useState(props.time);
@@ -18,7 +20,10 @@ const Timer = (props) => {
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
   return (
-    <p className="timer">{`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`}</p>
+    <p className="timer">
+      <FontAwesomeIcon icon={faClock} />{" "}
+      {`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`}
+    </p>
   );
 };
 

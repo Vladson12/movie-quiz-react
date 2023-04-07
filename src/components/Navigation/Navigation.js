@@ -46,7 +46,7 @@ const Navigation = () => {
           </>
         ) : (
           <>
-            <Link to="#" className="nav-p">
+            <Link to="/profile" className="nav-p">
               <FontAwesomeIcon icon={faUser} /> {auth.login}
             </Link>
             <Link to="/" onClick={onLogoutButtonClick} className="nav-p">

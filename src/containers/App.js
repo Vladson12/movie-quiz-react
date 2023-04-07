@@ -23,6 +23,14 @@ import { useCookies } from "react-cookie";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import fetchQuizData from "../util/fetchQuizData";
+import { quizGreetingMessage } from "../util/quizMessages";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCirclePlay,
+  faCircleStop,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
+import Profile from "../components/Profile/Profile";
 
 const App = () => {
   const [size, setSize] = useState(20);
@@ -34,8 +42,7 @@ const App = () => {
   const [timeForOneItem, setTimeForOneItem] = useState(15);
   const [quizTime, setQuizTime] = useState(0);
   const [category, setCategory] = useState("");
-  const [startStopButtonContent, setStartStopButtonContent] =
-    useState("Let's go!");
+  const [startStopButtonContent, setStartStopButtonContent] = useState({});
 
   const { auth, setAuth } = useAuth();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -70,16 +77,28 @@ const App = () => {
   useEffect(() => {
     switch (quizPhase) {
       case Phase.BEFORE_START:
-        setStartStopButtonContent("Let's go!");
+        setStartStopButtonContent({
+          icon: <FontAwesomeIcon icon={faCirclePlay} />,
+          message: "Let's go!",
+        });
         break;
       case Phase.RUNNING:
-        setStartStopButtonContent("Finish");
+        setStartStopButtonContent({
+          icon: <FontAwesomeIcon icon={faCircleStop} />,
+          message: "Finish",
+        });
         break;
       case Phase.FINISHED:
-        setStartStopButtonContent("Try again");
+        setStartStopButtonContent({
+          icon: <FontAwesomeIcon icon={faRotateRight} />,
+          message: "Try again!",
+        });
         break;
       default:
-        setStartStopButtonContent("Let's go!");
+        setStartStopButtonContent({
+          icon: <FontAwesomeIcon icon={faCirclePlay} />,
+          message: "Let's go!",
+        });
         break;
     }
   }, [quizPhase]);
@@ -187,9 +206,7 @@ const App = () => {
 
           {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
             <div className="center">
-              <h1>
-                {"Hey, you're good at movies, aren't you? Take the quiz!"}
-              </h1>
+              <h1>{quizGreetingMessage}</h1>
             </div>
           )}
           {quizPhase === Phase.FINISHED && (
@@ -250,6 +267,7 @@ const App = () => {
           )}
         </Route>
         <Route exact path="/login" component={Login} />
+        <Route exact path="/profile" component={Profile} />
         <Route exact path="/signup" component={Register} />
         <Route exact path="/about" component={About} />
       </Switch>

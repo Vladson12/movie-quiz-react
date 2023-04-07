@@ -1,12 +1,14 @@
 import React from "react";
 
 import "../QuizOptions/QuizOptions.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 
 const LangSelector = ({ lang, onChange }) => {
   return (
     <div className="selector">
       <label className="selector-label" htmlFor="lang">
-        {"Quiz language:"}
+        <FontAwesomeIcon icon={faLanguage} /> {"Quiz language:"}
       </label>
       <select
         className="selector-field"
