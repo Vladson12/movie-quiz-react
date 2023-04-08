@@ -9,12 +9,7 @@ const useRefreshToken = () => {
   const refresh = async () => {
     try {
       const responseRefresh = await axiosPrivate.post(
-        process.env.REACT_APP_REFRESH_ENDPOINT,
-        {},
-        {
-          headers: { Authorization: `Bearer ${cookies.user.refreshToken}` },
-          withCredentials: true,
-        }
+        process.env.REACT_APP_REFRESH_ENDPOINT
       );
       setCookie(
         "user",

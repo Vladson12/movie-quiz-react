@@ -49,17 +49,11 @@ const App = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    const getUserInfo = async () => {
+    const setUserData = async () => {
       if (cookies.user) {
         try {
           const responseMe = await axiosPrivate.get(
-            process.env.REACT_APP_GET_CURRENT_USER_ENDPOINT,
-            {
-              headers: {
-                Authorization: `Bearer ${cookies.user.accessToken}`,
-                withCredentials: true,
-              },
-            }
+            process.env.REACT_APP_GET_CURRENT_USER_ENDPOINT
           );
           setAuth(responseMe.data);
         } catch (err) {
@@ -71,8 +65,8 @@ const App = () => {
       }
     };
 
-    getUserInfo();
-  }, []);
+    setUserData();
+  }, [cookies]);
 
   useEffect(() => {
     switch (quizPhase) {
@@ -127,20 +121,11 @@ const App = () => {
         setQuizPhase(Phase.FINISHED);
         setCurrentItemIndex(0);
         if (auth) {
-          axiosPrivate.post(
-            process.env.REACT_APP_CREATE_GAME_ENDPOINT,
-            {
-              playedAt: new Date(),
-              size,
-              correctAnswers,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${cookies.user.accessToken}`,
-                withCredentials: true,
-              },
-            }
-          );
+          axiosPrivate.post(process.env.REACT_APP_CREATE_GAME_ENDPOINT, {
+            playedAt: new Date(),
+            size,
+            correctAnswers,
+          });
         }
         break;
       case Phase.FINISHED:

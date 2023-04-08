@@ -5,8 +5,7 @@ const fetchQuizData = async (size, language) => {
   let items = [];
   try {
     const responseMovies = await axios.get(
-      `${process.env.REACT_APP_MOVIES_ENDPOINT}?quantity=${size}&language=${language}`,
-      { withCredentials: true }
+      `${process.env.REACT_APP_MOVIES_ENDPOINT}?quantity=${size}&language=${language}`
     );
     responseMovies.data.forEach((movie) => {
       const index = getRandomInt(0, movie.images.length - 1);

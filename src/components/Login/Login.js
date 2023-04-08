@@ -39,7 +39,6 @@ const Login = () => {
         JSON.stringify({ login: user, password: pwd }),
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
       setCookie(
@@ -50,21 +49,11 @@ const Login = () => {
         },
         { path: "/" }
       );
-
-      const responseMe = await axiosPrivate.get(
-        process.env.REACT_APP_GET_CURRENT_USER_ENDPOINT,
-        {
-          headers: {
-            Authorization: `Bearer ${responseLogin.data.accessToken}`,
-            withCredentials: true,
-          },
-        }
-      );
-      setAuth(responseMe.data);
       setUser("");
       setPwd("");
       history.push("/");
     } catch (err) {
+      console.log(err);
       if (!err?.response) {
         setErrMsg("No server response");
       } else if (err.response?.status === 400) {
