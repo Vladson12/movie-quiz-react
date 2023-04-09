@@ -11,13 +11,16 @@ const useAxiosPrivate = () => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
+          if (!cookies.user) return Promise.reject(new Error("No user cookie"));
           config.headers[
             "Authorization"
           ] = `Bearer ${cookies.user.accessToken}`;
         }
         return config;
       },
-      (error) => Promise.reject(error)
+      (error) => {
+        return Promise.reject(error);
+      }
     );
 
     const responseIntercept = axiosPrivate.interceptors.response.use(
@@ -40,7 +43,7 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };
-  }, []);
+  });
 
   return axiosPrivate;
 };

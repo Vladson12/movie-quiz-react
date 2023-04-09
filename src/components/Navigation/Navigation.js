@@ -1,5 +1,5 @@
 import "./Navigation.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../Logo/Logo";
@@ -29,7 +29,7 @@ const Navigation = () => {
         <Link to="/" className="nav-p">
           <FontAwesomeIcon icon={faHouse} /> {"Home"}
         </Link>
-        <Link to="/about" className="nav-p">
+        <Link to="about" className="nav-p">
           <FontAwesomeIcon icon={faCircleInfo} /> {"About"}
         </Link>
       </nav>
@@ -37,7 +37,7 @@ const Navigation = () => {
       <nav className="nav-auth">
         {!auth ? (
           <>
-            <Link to="/login" className="nav-p">
+            <Link to="login" className="nav-p">
               <FontAwesomeIcon icon={faRightToBracket} /> {"Sign In"}
             </Link>
             <Link to="signup" className="nav-p">
@@ -46,7 +46,7 @@ const Navigation = () => {
           </>
         ) : (
           <>
-            <Link to="/profile" className="nav-p">
+            <Link to="profile" className="nav-p">
               <FontAwesomeIcon icon={faUser} /> {auth.login}
             </Link>
             <Link to="/" onClick={onLogoutButtonClick} className="nav-p">

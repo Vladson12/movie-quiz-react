@@ -7,13 +7,13 @@ import "./Login.css";
 import useAuth from "../../hooks/useAuth";
 import { useCookies } from "react-cookie";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { auth, setAuth } = useAuth();
   const userRef = useRef();
   const errRef = useRef();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
@@ -51,7 +51,7 @@ const Login = () => {
       );
       setUser("");
       setPwd("");
-      history.push("/");
+      navigate("/", { replace: true });
     } catch (err) {
       console.log(err);
       if (!err?.response) {

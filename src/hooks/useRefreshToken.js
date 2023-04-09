@@ -1,6 +1,6 @@
 import { useCookies } from "react-cookie";
-import { axiosPrivate } from "../api/axios";
 import useAuth from "./useAuth";
+import axios from "../api/axios";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
@@ -8,8 +8,13 @@ const useRefreshToken = () => {
 
   const refresh = async () => {
     try {
-      const responseRefresh = await axiosPrivate.post(
-        process.env.REACT_APP_REFRESH_ENDPOINT
+      const responseRefresh = await axios.post(
+        process.env.REACT_APP_REFRESH_ENDPOINT,
+        {},
+        {
+          headers: { Authorization: `Bearer ${cookies.user.refreshToken}` },
+          withCredentials: true,
+        }
       );
       setCookie(
         "user",
