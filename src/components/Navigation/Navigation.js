@@ -1,5 +1,5 @@
 import "./Navigation.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../Logo/Logo";

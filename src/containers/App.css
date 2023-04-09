@@ -1,6 +1,8 @@
 .App {
   min-height: 100vh;
   padding: 0rem 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .center {
