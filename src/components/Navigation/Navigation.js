@@ -23,39 +23,39 @@ const Navigation = () => {
   };
 
   return (
-    <header>
-      <nav className="nav-rest">
+    <div className="header">
+      <nav className="nav nav-info">
         <Logo />
-        <Link to="/" className="nav-p">
+        <Link to="/" className="nav__item">
           <FontAwesomeIcon icon={faHouse} /> {"Home"}
         </Link>
-        <Link to="about" className="nav-p">
+        <Link to="about" className="nav__item">
           <FontAwesomeIcon icon={faCircleInfo} /> {"About"}
         </Link>
       </nav>
 
-      <nav className="nav-auth">
+      <nav className="nav nav-auth">
         {!auth ? (
           <>
-            <Link to="login" className="nav-p">
+            <Link to="login" className="nav__item">
               <FontAwesomeIcon icon={faRightToBracket} /> {"Sign In"}
             </Link>
-            <Link to="signup" className="nav-p">
+            <Link to="signup" className="nav__item">
               <FontAwesomeIcon icon={faUserPlus} /> {"Sign Up"}
             </Link>
           </>
         ) : (
           <>
-            <Link to="profile" className="nav-p">
+            <Link to="profile" className="nav__item">
               <FontAwesomeIcon icon={faUser} /> {auth.login}
             </Link>
-            <Link to="/" onClick={onLogoutButtonClick} className="nav-p">
+            <Link to="/" onClick={onLogoutButtonClick} className="nav__item">
               <FontAwesomeIcon icon={faRightFromBracket} /> {"Log out"}
             </Link>
           </>
         )}
       </nav>
-    </header>
+    </div>
   );
 };
 

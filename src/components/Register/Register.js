@@ -9,8 +9,9 @@ import axios from "../../api/axios";
 
 import "./Register.css";
 import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
-const USER_REGEX = /^[A-z][A-z0-9-_@.]{3,23}$/;
+const USER_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Register = () => {
@@ -86,22 +87,22 @@ const Register = () => {
   };
 
   return (
-    <div className="Register">
+    <div className="register">
       {success ? (
-        <section>
-          <h1>Success!</h1>
+        <section className="register-section">
+          <h1 className="register__messa">Success!</h1>
           <p>
             <a href="/login">Sign In</a>
           </p>
         </section>
       ) : auth ? (
-        <section>
+        <section className="register-section">
           <h1>
             You already have an account and logged in! Please log out first.
           </h1>
         </section>
       ) : (
-        <section>
+        <section className="register-section">
           <p
             ref={errRef}
             className={errMsg ? "errmsg" : "offscreen"}
@@ -109,10 +110,10 @@ const Register = () => {
           >
             {errMsg}
           </p>
-          <h1>Register</h1>
-          <form className="form-register" onSubmit={handleSubmit}>
+          <h1 className="register-section__title">Register</h1>
+          <form className="register-section__form" onSubmit={handleSubmit}>
             <label htmlFor="username">
-              Username:
+              Email:
               <FontAwesomeIcon
                 icon={faCheck}
                 className={validName ? "valid" : "hide"}
@@ -143,11 +144,7 @@ const Register = () => {
               }
             >
               <FontAwesomeIcon icon={faInfoCircle} />
-              4 to 24 characters.
-              <br />
-              Must begin with a letter.
-              <br />
-              Letters, numbers, underscores, hyphens allowed.
+              Must be an existing Email.
             </p>
 
             <label htmlFor="password">
@@ -192,7 +189,7 @@ const Register = () => {
             </p>
 
             <label htmlFor="confirm_pwd">
-              Confirm Password:
+              Confirm password:
               <FontAwesomeIcon
                 icon={faCheck}
                 className={validMatch && matchPwd ? "valid" : "hide"}
@@ -225,10 +222,10 @@ const Register = () => {
             </p>
 
             <button
-              className="button-register"
+              className="register-section__form__button"
               disabled={!validName || !validPwd || !validMatch ? true : false}
             >
-              Sign Up
+              Sign up
             </button>
           </form>
           <p>
@@ -236,7 +233,9 @@ const Register = () => {
             <br />
             <span className="line">
               {/*put router link here*/}
-              <a href="/login">Sign In</a>
+              <Link className="register-section__link" to="/login">
+                Sign in
+              </Link>
             </span>
           </p>
         </section>

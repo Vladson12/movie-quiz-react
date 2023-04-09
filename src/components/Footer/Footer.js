@@ -9,10 +9,10 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      <p className="copyright">
+      <p className="footer__copyright">
         <FontAwesomeIcon icon={faCopyright} /> {year} Vladson12, Inc
       </p>
-      <a className="mail" href={`mailto: ${email}`}>
+      <a className="footer__link" href={`mailto: ${email}`}>
         <FontAwesomeIcon icon={faEnvelope} />
       </a>
     </footer>

@@ -7,8 +7,13 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+  background-color: rgb(100, 100, 200);
 }
 
-.mail {
+.footer__link {
   margin: 0px 10px;
+}
+
+.footer__link:hover {
+  color: rgb(70, 10, 170);
 }

@@ -1,13 +1,12 @@
-.Login {
+.login {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   padding: 1rem 0.5rem;
 }
 
-section {
+.login-section {
   width: 100%;
   max-width: 420px;
   min-height: 400px;
@@ -15,10 +14,15 @@ section {
   flex-direction: column;
   justify-content: flex-start;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgb(100, 100, 200);
 }
 
-.form-login {
+.login-section__title {
+  display: flex;
+  justify-content: center;
+}
+
+.login-section__form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -26,13 +30,8 @@ section {
   padding-bottom: 1rem;
 }
 
-a,
-a:visited {
-  color: #fff;
-}
-
 .form-login--input,
-.button-login,
+.login-section__form__button,
 textarea {
   font-family: "Nunito", sans-serif;
   font-size: 22px;
@@ -41,12 +40,32 @@ textarea {
 }
 
 label,
-.button-login {
+.login-section__form__button {
   margin-top: 1rem;
 }
 
-.button-login {
-  padding: 0.5rem;
+.login-section__form__button {
+  color: white;
+  background-color: rgb(20, 0, 80);
+}
+
+.login-section__form__button:hover {
+  background-color: rgb(70, 10, 170);
+}
+
+.login-section__form__button:disabled {
+  background-color: rgba(80, 80, 190, 0.3);
+
+  color: rgba(41, 41, 151, 0.3);
+  border-color: rgba(118, 118, 118, 0.3);
+}
+
+.login-section__link {
+  color: white;
+}
+
+.login-section__link:hover {
+  color: rgb(70, 10, 170);
 }
 
 .instructions {

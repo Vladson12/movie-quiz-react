@@ -7,7 +7,7 @@ import "./Login.css";
 import useAuth from "../../hooks/useAuth";
 import { useCookies } from "react-cookie";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { auth, setAuth } = useAuth();
@@ -68,13 +68,13 @@ const Login = () => {
   };
 
   return (
-    <div className="Login">
+    <div className="login">
       {auth ? (
-        <section>
+        <section className="login-section">
           <h1>{`You are already logged in as ${auth.login}! Please log out first.`}</h1>
         </section>
       ) : (
-        <section>
+        <section className="login-section">
           <p
             ref={errRef}
             className={errMsg ? "errmsg" : "offscreen"}
@@ -82,8 +82,8 @@ const Login = () => {
           >
             {errMsg}
           </p>
-          <h1>Sign in to Movie Quiz</h1>
-          <form className="form-login" onSubmit={handleSubmit}>
+          <h1 className="login-section__title">Sign in to Movie Quiz</h1>
+          <form className="login-section__form" onSubmit={handleSubmit}>
             <label htmlFor="text">Email:</label>
             <input
               className="form-login--input"
@@ -106,10 +106,10 @@ const Login = () => {
               required
             />
             <button
-              className="button-login"
+              className="login-section__form__button"
               disabled={!user || !pwd ? true : false}
             >
-              Sign In
+              Sign in
             </button>
           </form>
           <p>
@@ -117,7 +117,9 @@ const Login = () => {
             <br />
             <span className="line">
               {/*put router link here*/}
-              <a href="/signup">Create an account.</a>
+              <Link className="login-section__link" to="/signup">
+                Create an account
+              </Link>
             </span>
           </p>
         </section>
