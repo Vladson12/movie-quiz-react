@@ -1,0 +1,22 @@
+.playguiz-section {
+  width: 100%;
+  flex: 1;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.playquiz-section__button {
+  width: 200px;
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 9px;
+  color: white;
+  background-color: rgb(200, 0, 60);
+}
+
+.playquiz-section__button:hover {
+  background-color: rgb(220, 80, 120);
+}

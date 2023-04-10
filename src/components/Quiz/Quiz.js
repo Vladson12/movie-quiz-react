@@ -23,6 +23,8 @@ import fetchQuizData from "../../util/fetchQuizData";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 
+import "./Quiz.css";
+
 const Quiz = () => {
   const [size, setSize] = useState(20);
   const [quizPhase, setQuizPhase] = useState(Phase.BEFORE_START);
@@ -150,14 +152,8 @@ const Quiz = () => {
   };
 
   return (
-    <div className="quiz">
+    <div className="quiz-section">
       {quizPhase === Phase.PREPARING && <Loading />}
-
-      {[Phase.BEFORE_START, Phase.PREPARING].includes(quizPhase) && (
-        <div className="center">
-          <h1>{quizGreetingMessage}</h1>
-        </div>
-      )}
       {quizPhase === Phase.FINISHED && (
         <QuizResults correct={correctAnswers} total={quizItems.length} />
       )}

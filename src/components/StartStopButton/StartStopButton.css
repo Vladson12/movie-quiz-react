@@ -13,10 +13,5 @@
 }
 
 .start-stop-button--button:hover {
-  transform: scale(1.05);
-}
-
-.start-stop-button--button:active {
-  /* color: rgba(76, 76, 209, 0.541); */
-  background-color: rgba(76, 76, 209, 0.541);
+  background-color: rgb(70, 10, 170);
 }

@@ -1,8 +1,8 @@
 .card {
   display: flex;
   justify-content: center;
-  height: 350px;
-  width: 250px;
+  height: 400px;
+  width: 300px;
   border-radius: 10px;
   border: 2px solid black;
   margin: 0 10px;
@@ -13,13 +13,9 @@
 }
 
 .card:hover {
-  transform: scale(1.05);
-}
-
-.card:active {
-  transform: scale(1);
+  transform: scale(1.02);
 }
 
 .card.active {
-  border: 6px solid orange;
+  border: 4px solid orange;
 }
