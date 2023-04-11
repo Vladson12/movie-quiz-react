@@ -10,13 +10,14 @@ import isAnswerCorrect from "../util/isAnswerCorrect";
 import fetchQuizData from "../util/fetchQuizData";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from "../hooks/useAuth";
+import languages from "../util/language";
 
 const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
   const [size, setSize] = useState(20);
   const [quizPhase, setQuizPhase] = useState(Phase.BEFORE_START);
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState(languages.get("English"));
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [quizItems, setQuizItems] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -64,11 +65,11 @@ export const DataProvider = ({ children }) => {
     switch (quizPhase) {
       case Phase.BEFORE_START:
         fetchQuizData(size, language).then((items) => {
-          setQuizPhase(Phase.RUNNING);
           setCurrentItemIndex(0);
           setQuizItems(items);
           setCorrectAnswers(0);
           setQuizTime(size * timeForOneItem);
+          setQuizPhase(Phase.RUNNING);
         });
         setQuizPhase(Phase.PREPARING);
         break;
