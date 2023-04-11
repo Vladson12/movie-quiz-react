@@ -31,8 +31,9 @@ const Quiz = () => {
       {[Phase.RUNNING, Phase.FINISHED].includes(quizPhase) && <QuizItemPanel />}
       {quizPhase === Phase.RUNNING &&
         !quizItems[currentItemIndex].isAnswered && <AnswerForm />}
-      {(quizPhase === Phase.FINISHED ||
-        quizItems[currentItemIndex].isAnswered) && <AnswerInfo />}
+      {((quizPhase === Phase.RUNNING &&
+        quizItems[currentItemIndex].isAnswered) ||
+        quizPhase === Phase.FINISHED) && <AnswerInfo />}
       {[Phase.RUNNING, Phase.FINISHED].includes(quizPhase) && <QuizItem />}
     </div>
   );
