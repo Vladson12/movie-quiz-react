@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Card from "./CategoryCard";
 import "./CategoryCardList.css";
+import DataContext from "../../context/DataProvider";
 
-const CategoryCardList = ({ category, onClick, title, cards }) => {
+const CategoryCardList = ({ cards }) => {
+  const { category, onCategoryClick } = useContext(DataContext);
+
   return (
     <div className="category-card-list">
-      <h2 className="title">{title}</h2>
+      <h2 className="title">Choose category</h2>
       <div className="card-list">
         {cards.map((card, i) => {
           return (
             <Card
               active={category === card.name.toLowerCase() ? true : false}
-              onClick={onClick}
+              onClick={onCategoryClick}
               key={i}
               id={card.name}
               name={card.name}

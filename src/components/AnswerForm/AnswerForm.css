@@ -3,7 +3,7 @@
   justify-content: center;
   margin-bottom: 5px;
   margin-top: 5px;
-  width: 80%;
+  width: 90%;
 }
 
 .answer-form--input {
@@ -19,15 +19,15 @@
   border-radius: 5px;
   font-size: 20px;
   width: 30%;
-  background-color: rgba(179, 168, 168, 0.737);
+  background-color: rgb(20, 0, 80);
   /* background-color: rgba(76, 76, 209, 0.541); */
   border: 2px solid black;
-  color: black;
+  color: white;
   font-weight: 500;
   text-align: center;
   transition: all 0.2s;
 }
 
-.answer-form--button:active {
-  background-color: rgba(76, 76, 209, 0.541);
+.answer-form--button:hover {
+  background-color: rgb(70, 10, 170);
 }

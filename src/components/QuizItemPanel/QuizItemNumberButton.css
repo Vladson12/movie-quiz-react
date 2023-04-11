@@ -14,12 +14,13 @@
 }
 
 .quiz-item-panel--button:active {
-  background-color: rgba(76, 76, 209, 0.541);
+  background-color: rgb(20, 0, 80);
   color: rgba(233, 217, 217, 0.737);
 }
 
 .active {
-  background-color: rgba(76, 76, 209, 0.541);
+  background-color: rgb(20, 0, 80);
+  color: white;
   border: 3px solid black;
 }
 

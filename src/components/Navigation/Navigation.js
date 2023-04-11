@@ -38,10 +38,10 @@ const Navigation = () => {
         {!auth ? (
           <>
             <Link to="login" className="nav__item">
-              <FontAwesomeIcon icon={faRightToBracket} /> {"Sign In"}
+              <FontAwesomeIcon icon={faRightToBracket} /> {"Sign in"}
             </Link>
             <Link to="signup" className="nav__item">
-              <FontAwesomeIcon icon={faUserPlus} /> {"Sign Up"}
+              <FontAwesomeIcon icon={faUserPlus} /> {"Sign up"}
             </Link>
           </>
         ) : (

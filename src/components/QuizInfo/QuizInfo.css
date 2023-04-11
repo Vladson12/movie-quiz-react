@@ -1,0 +1,11 @@
+.quiz-info {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.quiz-info__score {
+  margin-right: 20px;
+}

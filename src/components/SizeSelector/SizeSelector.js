@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import "../QuizOptions/QuizOptions.css";
+import DataContext from "../../context/DataProvider";
 
-const SizeSelector = ({ size, onChange }) => {
+const SizeSelector = () => {
+  const { size, onSizeSelectorChange } = useContext(DataContext);
+
   return (
     <div className="selector">
       <label className="selector-label" htmlFor="zise">
@@ -11,7 +14,7 @@ const SizeSelector = ({ size, onChange }) => {
       <select
         className="selector-field"
         defaultValue={size}
-        onChange={onChange}
+        onChange={onSizeSelectorChange}
         id="size"
       >
         <option className="selector-option" value="10">

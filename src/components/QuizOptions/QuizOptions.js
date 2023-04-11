@@ -1,34 +1,19 @@
-import React from "react";
 import LangSelector from "../LangSelector/LangSelector";
 import SizeSelector from "../SizeSelector/SizeSelector";
 
 import "./QuizOptions.css";
 import CategoryCardList from "../CardList/CategoryCardList";
 
-const QuizOptions = ({
-  lang,
-  size,
-  onLangChange,
-  onSizeChange,
-  title,
-  category,
-  cards,
-  onCategoryClick,
-}) => {
+const QuizOptions = ({ cards }) => {
   return (
     <main className="quiz-options">
       <div className="rest-selectors">
-        <LangSelector lang={lang} onChange={onLangChange} />
+        <LangSelector />
 
-        <SizeSelector size={size} onChange={onSizeChange} />
+        <SizeSelector />
       </div>
       <div className="category-selector">
-        <CategoryCardList
-          title={title}
-          category={category}
-          cards={cards}
-          onClick={onCategoryClick}
-        />
+        <CategoryCardList cards={cards} />
       </div>
     </main>
   );

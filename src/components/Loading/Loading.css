@@ -17,10 +17,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(130, 130, 130);
+  color: white;
+  background-color: rgb(70, 10, 170);
   padding: 1rem 1.5rem;
   width: 24rem;
-  border-radius: 1rem;
+  border-radius: 5px;
   border: 2px solid black;
 }
 
