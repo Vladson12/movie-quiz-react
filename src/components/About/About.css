@@ -1,7 +1,11 @@
 .about-section {
+  width: 90%;
+  align-self: center;
+  margin-top: 20px;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  background-color: rgb(100, 100, 200);
 }
 
 .about-section__title {

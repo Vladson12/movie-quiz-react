@@ -68,7 +68,6 @@ export const DataProvider = ({ children }) => {
           setCurrentItemIndex(0);
           setQuizItems(items);
           setCorrectAnswers(0);
-          setQuizTime(size * timeForOneItem);
           setQuizPhase(Phase.RUNNING);
         });
         setQuizPhase(Phase.PREPARING);

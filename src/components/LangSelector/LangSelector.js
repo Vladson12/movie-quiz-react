@@ -20,7 +20,11 @@ const LangSelector = () => {
         onChange={onLangSelectorChange}
         id="lang"
       >
-        <option className="selector-option" value={languages.get("English")}>
+        <option
+          className="selector-option"
+          selected
+          value={languages.get("English")}
+        >
           {"English"}
         </option>
         <option className="selector-option" value={languages.get("Русский")}>

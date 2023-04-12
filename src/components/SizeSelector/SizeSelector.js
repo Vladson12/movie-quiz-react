@@ -17,7 +17,7 @@ const SizeSelector = () => {
         onChange={onSizeSelectorChange}
         id="size"
       >
-        <option className="selector-option" value="10">
+        <option className="selector-option" selected value="10">
           {10}
         </option>
         <option className="selector-option" value="20">
