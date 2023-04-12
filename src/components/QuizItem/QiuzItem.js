@@ -13,12 +13,7 @@ const QuizItem = () => {
   switch (category) {
     case "frame":
       content = (
-        <img
-          classname="frame"
-          alt="movie"
-          src={`/frames/${item.image}`}
-          height="350"
-        />
+        <img classname="frame" alt="movie" src={item.image} height="350" />
       );
       break;
     case "description":
